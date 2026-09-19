@@ -1,0 +1,12 @@
+schema: "classroom50/repo-config/v1"
+classroom: "sn26-prog"
+assignment: "lab-04"
+owner:
+  username: "Timofei666228"
+  id: 133135307
+  accepted_at: "2026-09-19T09:27:13Z"
+source:
+  owner: "sn26-prog"
+  owner_id: 260849978
+  repo: "lab_04"
+  branch: "main"
