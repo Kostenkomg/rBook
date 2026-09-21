@@ -1,57 +1,65 @@
 ### Лабораторная работа № 4: Абстракция данных и списки"""
 
-# Вопрос 1. 
+# ============================================================
+# Вопрос 1. Индексация вложенных списков
+# ============================================================
 def _q_01():
     """
     Часть 1
     >>> x = [1, 3, [5, 7], 9]                                   # doctest: +SKIP
-    >>> x[______]                                               # doctest: +SKIP
+    >>> x[2][1]                                                 # doctest: +SKIP
     7
     >>> x = [[7]]                                               # doctest: +SKIP
-    >>> x[______]                                               # doctest: +SKIP
+    >>> x[0][0]                                                 # doctest: +SKIP
     7
     >>> x = [3, 2, 1, [9, 8, 7]]                                # doctest: +SKIP
-    >>> x[______]                                               # doctest: +SKIP
+    >>> x[3][2]                                                 # doctest: +SKIP
     7
     >>> x = [[3, [5, 7], 9]]                                    # doctest: +SKIP
-    >>> x[______]                                               # doctest: +SKIP
+    >>> x[0][1][1]                                              # doctest: +SKIP
     7
 
     Часть 2
     >>> lst = [3, 2, 7, [84, 83, 82]]                           # doctest: +SKIP
     >>> lst[4]                                                  # doctest: +SKIP
-    ______
+    IndexError: list index out of range
     >>> lst[3][0]                                               # doctest: +SKIP
-    ______
+    84
     """
-    return 0
+    return 0   # заглушка
 
-# Вопрос 2. 
+
+# ============================================================
+# Вопрос 2. Генераторы списков
+# ============================================================
 def _q_02():
     """
     Часть 1
     >>> [x*x for x in range(5)]                                 # doctest: +SKIP
-    ______
+    [0, 1, 4, 9, 16]
     >>> [n for n in range(10) if n % 2 == 0]                    # doctest: +SKIP
-    ______
+    [0, 2, 4, 6, 8]
     >>> ones = [1 for i in ["привет", "как", "сам"]]            # doctest: +SKIP
     >>> ones + [str(i) for i in [6, 3, 8, 4]]                   # doctest: +SKIP
-    ______
+    [1, 1, 1, '6', '3', '8', '4']
     >>> [i+5 for i in [n for n in range(1,4)]]                  # doctest: +SKIP
-    ______
+    [6, 7, 8]
 
     Часть 2
     >>> [i**2 for i in range(10) if i < 3]                      # doctest: +SKIP
-    ______
+    [0, 1, 4]
     >>> lst = ['привет' for i in [1, 2, 3]]                     # doctest: +SKIP
     >>> print(lst)                                              # doctest: +SKIP
-    ______
+    ['привет', 'привет', 'привет']
     >>> lst + [i for i in ['1', '2', '3']]                      # doctest: +SKIP
-    ______
+    ['привет', 'привет', 'привет', '1', '2', '3']
     """
-    return 0
+    return 0   # заглушка
 
-# Вопрос 3.
+
+# ============================================================
+# Вопрос 3. Печать элементов с условием
+# ============================================================
 def if_this_not_that(i_list, this):
     """
     Определи функцию, которая принимает список целых `i_list` и целое число
@@ -66,9 +74,16 @@ def if_this_not_that(i_list, this):
     4
     5
     """
-    "*** ТВОЙ КОД ЗДЕСЬ ***"
+    for elem in i_list:
+        if elem > this:
+            print(elem)
+        else:
+            print('that')
 
-# Вопрос 4.
+
+# ============================================================
+# Вопрос 4. Абстракция данных: город = [name, lat, lon]
+# ============================================================
 def make_city(name, lat, lon):
     """
     >>> city = make_city('Ярославль', 0, 1)
@@ -81,6 +96,7 @@ def make_city(name, lat, lon):
     """
     return [name, lat, lon]
 
+
 def get_name(city):
     """
     >>> city = make_city('Ярославль', 0, 1)
@@ -88,6 +104,7 @@ def get_name(city):
     'Ярославль'
     """
     return city[0]
+
 
 def get_lat(city):
     """
@@ -97,6 +114,7 @@ def get_lat(city):
     """
     return city[1]
 
+
 def get_lon(city):
     """
     >>> city = make_city('Ярославль', 0, 1)
@@ -105,7 +123,10 @@ def get_lon(city):
     """
     return city[2]
 
+
 from math import sqrt
+
+
 def distance(city1, city2):
     """
     >>> city1 = make_city('city1', 0, 1)
@@ -117,9 +138,14 @@ def distance(city1, city2):
     >>> distance(city3, city4)
     5.0
     """
-    "*** ТВОЙ КОД ЗДЕСЬ ***"
+    lat_diff = get_lat(city1) - get_lat(city2)
+    lon_diff = get_lon(city1) - get_lon(city2)
+    return sqrt(lat_diff ** 2 + lon_diff ** 2)
 
-# Вопрос 5.
+
+# ============================================================
+# Вопрос 5. Ближайший город
+# ============================================================
 def closer_city(lat, lon, city1, city2):
     """
     Возвращает название города city1 или города city2 в зависимости от того, 
@@ -134,15 +160,27 @@ def closer_city(lat, lon, city1, city2):
     >>> closer_city(57.616667, 39.85, london, mumbai)
     'Лондон'
     """
-    "*** ТВОЙ КОД ЗДЕСЬ ***"
+    target = make_city('target', lat, lon)
+    dist1 = distance(target, city1)
+    dist2 = distance(target, city2)
+    if dist1 < dist2:
+        return get_name(city1)
+    else:
+        return get_name(city2)
 
-# Вопрос 6.
+
+# ============================================================
+# Вопрос 6. Альтернативная реализация (закомментирована)
+# ============================================================
 # make_city = lambda name, lat, lon: { 'name': name, 'lat': lat, 'lon': lon }
 # get_name = lambda city: city['name']
 # get_lat = lambda city: city['lat']
 # get_lon = lambda city: city['lon']
 
-# Вопрос 7.
+
+# ============================================================
+# Вопрос 7. Создание пустой доски
+# ============================================================
 def create_row(size):
     """
     Возвращает отдельную пустую строку поля заданного размера. Каждый пустой 
@@ -151,7 +189,8 @@ def create_row(size):
     >>> create_row(5)
     ['-', '-', '-', '-', '-']
     """
-    "*** ТВОЙ КОД ЗДЕСЬ ***"
+    return ['-'] * size
+
 
 def create_board(rows, columns):
     """Возвращает игровое поле заданного размера.
@@ -159,9 +198,12 @@ def create_board(rows, columns):
     >>> create_board(3, 5)
     [['-', '-', '-', '-', '-'], ['-', '-', '-', '-', '-'], ['-', '-', '-', '-', '-']]
     """
-    "*** ТВОЙ КОД ЗДЕСЬ ***"
+    return [create_row(columns) for _ in range(rows)]
 
-# Вопрос 8.
+
+# ============================================================
+# Вопрос 8. Замена элемента с созданием нового списка
+# ============================================================
 def replace_elem(lst, index, elem):
     """Создаёт и возвращает новый список с теми же элементами, что и lst,
     за исключением элемента index, значение которого должно быть elem.
@@ -174,22 +216,28 @@ def replace_elem(lst, index, elem):
     False
     """
     assert index >= 0 and index < len(lst), 'Индекс за пределами размера списка'
-    "*** ТВОЙ КОД ЗДЕСЬ ***"
+    new_lst = lst[:]              # поверхностная копия через срез
+    new_lst[index] = elem         # заменяем элемент в копии
+    return new_lst
 
-# Вопрос 9.
+
+# ============================================================
+# Вопрос 9. Получение и установка фишки
+# ============================================================
 def get_piece(board, row, column):
     """Возвращает состояние поля в позиции (row, column) на доске.
 
     >>> rows, columns = 2, 2
     >>> board = create_board(rows, columns)
-    >>> board = put_piece(board, rows, 0, 'X')[1] # Ставим "X" в столбец 0 поля и обновляем доску
-    >>> board = put_piece(board, rows, 0, 'O')[1] # Ставим "O" в столбец 0 поля и обновляем доску
+    >>> board = put_piece(board, rows, 0, 'X')[1]
+    >>> board = put_piece(board, rows, 0, 'O')[1]
     >>> get_piece(board, 1, 0)
     'X'
     >>> get_piece(board, 1, 1)
     '-'
     """
-    "*** ТВОЙ КОД ЗДЕСЬ ***"
+    return board[row][column]
+
 
 def put_piece(board, max_rows, column, player):
     """Размещает фишку игрока player в самом нижнем свободном поле заданного
@@ -210,9 +258,22 @@ def put_piece(board, max_rows, column, player):
     >>> row
     -1
     """
-    "*** ТВОЙ КОД ЗДЕСЬ ***"
+    # Идём снизу вверх: самая нижняя строка — с наибольшим индексом
+    for row in range(max_rows - 1, -1, -1):
+        # Нашли свободную ячейку в нужном столбце
+        if get_piece(board, row, column) == '-':
+            # Шаг 1: новая строка — копия board[row] с фишкой в column
+            new_row = replace_elem(board[row], column, player)
+            # Шаг 2: новая доска — копия board, где строка row заменена на new_row
+            new_board = replace_elem(board, row, new_row)
+            return row, new_board
+    # Свободных мест нет
+    return -1, board
 
-# Вопрос 10.
+
+# ============================================================
+# Вопрос 10. Ход игрока
+# ============================================================
 def make_move(board, max_rows, max_cols, col, player):
     """Размещает фишку игрока в столбец col доски в случае возможного хода.
     Возвращает тапл из двух значений:
@@ -238,9 +299,15 @@ def make_move(board, max_rows, max_cols, col, player):
     >>> row
     -1
     """
-    "*** ТВОЙ КОД ЗДЕСЬ ***"
+    # Проверка границ столбца
+    if col < 0 or col >= max_cols:
+        return -1, board
+    return put_piece(board, max_rows, col, player)
 
-# Вопрос 11.
+
+# ============================================================
+# Вопрос 11. Печать доски
+# ============================================================
 def print_board(board, max_rows, max_cols):
     """
     Распечатывает доску. Строка 0 сверху, столбец 0 слева.
@@ -255,9 +322,18 @@ def print_board(board, max_rows, max_cols):
     - -
     X -
     """
-    "*** ТВОЙ КОД ЗДЕСЬ ***"
+    for row in range(max_rows):
+        row_str = ''
+        for col in range(max_cols):
+            row_str += get_piece(board, row, col)
+            if col < max_cols - 1:
+                row_str += ' '
+        print(row_str)
 
-# Вопрос 12.
+
+# ============================================================
+# Вопрос 12. Проверка победы в строке/столбце
+# ============================================================
 def check_win_row(board, max_rows, max_cols, num_connect, row, player):
     """ 
     Возвращает True, если игрок player победил в заданной строке, иначе False.
@@ -275,12 +351,21 @@ def check_win_row(board, max_rows, max_cols, num_connect, row, player):
     >>> board = make_move(board, rows, columns, 1, 'X')[1]
     >>> check_win_row(board, rows, columns, num_connect, 3, 'X')
     True
-    >>> check_win_row(board, rows, columns, 4, 3, 'X')           # Победа зависит от num_connect
+    >>> check_win_row(board, rows, columns, 4, 3, 'X')
     False
-    >>> check_win_row(board, rows, columns, num_connect, 3, 'O') # Ищем победу только заданного игрока
+    >>> check_win_row(board, rows, columns, num_connect, 3, 'O')
     False
     """
-    "*** ТВОЙ КОД ЗДЕСЬ ***"
+    adjacent = 0
+    for col in range(max_cols):
+        if get_piece(board, row, col) == player:
+            adjacent += 1
+            if adjacent >= num_connect:
+                return True
+        else:
+            adjacent = 0
+    return False
+
 
 def check_win_column(board, max_rows, max_cols, num_connect, col, player):
     """
@@ -305,9 +390,20 @@ def check_win_column(board, max_rows, max_cols, num_connect, col, player):
     >>> check_win_column(board, rows, columns, num_connect, 1, 'X')
     False
     """
-    "*** ТВОЙ КОД ЗДЕСЬ ***"
+    adjacent = 0
+    for row in range(max_rows):
+        if get_piece(board, row, col) == player:
+            adjacent += 1
+            if adjacent >= num_connect:
+                return True
+        else:
+            adjacent = 0
+    return False
 
-# Вопрос 13.
+
+# ============================================================
+# Вопрос 13. Общая проверка победы
+# ============================================================
 def check_win(board, max_rows, max_cols, num_connect, row, col, player):
     """
     Возвращает True, если игрок player победил любым образом в заданных строке, 
@@ -343,7 +439,10 @@ def check_win(board, max_rows, max_cols, num_connect, row, col, player):
     """
     diagonal_win = check_win_diagonal(board, max_rows, max_cols, num_connect,
                                       row, col, player)
-    "*** ТВОЙ КОД ЗДЕСЬ ***"
+    return (check_win_row(board, max_rows, max_cols, num_connect, row, player) or
+            check_win_column(board, max_rows, max_cols, num_connect, col, player) or
+            diagonal_win)
+
 
 ##########################################################
 ### Функции для решения задач, которые не надо трогать ###
@@ -354,14 +453,14 @@ def check_win_diagonal(board, max_rows, max_cols, num_connect, row, col, player)
     Возвращает True, если победная диагональ заданного игрока проходит через поле
     (row, column), иначе False.
     """
-    # Находит верхнее левое начало потенциально победной диагонали.
+    # Верхнее левое начало потенциальной диагонали
     adjacent = 0
     row_top_left, col_top_left = row, col
     while row_top_left > 0 and col_top_left > 0:
         row_top_left -= 1
         col_top_left -= 1
 
-    # Проходит по диагонали вниз направо.
+    # Идём вниз-вправо
     while row_top_left < max_rows and col_top_left < max_cols:
         piece = get_piece(board, row_top_left, col_top_left)
         if piece == player:
@@ -373,14 +472,14 @@ def check_win_diagonal(board, max_rows, max_cols, num_connect, row, col, player)
         row_top_left += 1
         col_top_left += 1
 
-    # Находит верхнее правое начало потенциально победной диагонали.
+    # Верхнее правое начало потенциальной диагонали
     adjacent = 0
     row_top_right, col_top_right = row, col
     while row_top_right > 0 and col_top_right < max_cols - 1:
         row_top_right -= 1
         col_top_right += 1
 
-    # Проходит по диагонали вниз налево.
+    # Идём вниз-влево
     while row_top_right < max_rows and col_top_right >= 0:
         piece = get_piece(board, row_top_right, col_top_right)
         if piece == player:
@@ -394,18 +493,20 @@ def check_win_diagonal(board, max_rows, max_cols, num_connect, row, col, player)
 
     return False
 
+
 ###################################################################################
 ### Читать и понимать, что написано ниже, не нужно. Там только игровая механика. ###
 ###################################################################################
 
 import sys
 
+
 def other(player):
-    """ Возвращает другого игрока.
-    """
+    """ Возвращает другого игрока. """
     if player == 'X':
         return 'O'
     return 'X'
+
 
 def play(board, max_rows, max_cols, num_connect):
     max_turns = max_rows * max_cols
@@ -441,10 +542,10 @@ def play(board, max_rows, max_cols, num_connect):
 
         who = other(who)
 
+
 def start_game():
     # Получаем все условия игры от пользователя.
     while True:
-        # Получаем num_connect от пользователя.
         while True:
             try:
                 num_connect = int(input('Размер соединения (то есть 4 для «Четыре в ряд»)? '))
@@ -453,7 +554,6 @@ def start_game():
                 continue
             break
 
-        # Получаем количество строк на доске.
         while True:
             try:
                  max_rows = int(input('Сколько строк? '))
@@ -462,7 +562,6 @@ def start_game():
                 continue
             break
 
-        # Получаем количество столбцов на доске.
         while True:
             try:
                 max_cols = int(input('Сколько столбцов? '))
@@ -477,6 +576,7 @@ def start_game():
 
     board = create_board(max_rows, max_cols)
     play(board, max_rows, max_cols, num_connect)
+
 
 if __name__ == '__main__':
     import doctest, sys
